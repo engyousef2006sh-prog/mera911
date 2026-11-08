@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>For Mera ❤️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- الخطوط اختيارية: لو مفيش إنترنت هيتم استخدام الخطوط البديلة تلقائيًا -->
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&family=Tajawal:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============ ألوان وخطوط ============ */
+:root{
+  --baby:#ffe4ec; --blush:#ffc9d9; --rose:#e8588a; --deep:#b8325f;
+  --red:#d6264f; --white:#fffafb; --ink:#5a2a3c;
+  --serif:'Cormorant Garamond','Georgia',serif;
+  --ar:'Aref Ruqaa','Amiri','Traditional Arabic',serif;
+  --sans:'Tajawal','Segoe UI',Tahoma,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{
+  font-family:var(--sans);color:var(--ink);
+  background:linear-gradient(160deg,#fff0f5 0%,var(--baby) 45%,#ffd6e4 100%) fixed;
+  overflow-x:hidden;
+  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+}
+
+/* ============ القلوب المتحركة في الخلفية ============ */
+#hearts{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.heart{position:absolute;bottom:-40px;opacity:0;animation:floatUp linear forwards;will-change:transform,opacity}
+@keyframes floatUp{
+  0%{transform:translateY(0) translateX(0) rotate(0);opacity:0}
+  12%{opacity:.7}
+  100%{transform:translateY(-110vh) translateX(var(--dx)) rotate(var(--rot));opacity:0}
+}
+
+/* ============ الشاشات ============ */
+.screen{
+  position:relative;z-index:1;min-height:100vh;min-height:100dvh;
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:28px 22px;
+}
+.screen.active{display:flex;animation:screenIn .9s ease both}
+.screen.leaving{animation:screenOut .6s ease both}
+@keyframes screenIn{from{opacity:0;transform:scale(.97) translateY(14px)}to{opacity:1;transform:none}}
+@keyframes screenOut{to{opacity:0;transform:scale(1.03) translateY(-10px)}}
+
+h1,h2{font-family:var(--serif);font-weight:600;font-style:italic;color:var(--deep);line-height:1.1}
+
+/* ============ 1) شاشة كلمة السر ============ */
+.big-heart{font-size:84px;line-height:1;filter:drop-shadow(0 8px 18px rgba(214,38,79,.35));animation:beat 1.8s ease-in-out infinite}
+@keyframes beat{0%,100%{transform:scale(1)}14%{transform:scale(1.12)}28%{transform:scale(1)}42%{transform:scale(1.08)}}
+#lock h1{font-size:clamp(2.6rem,11vw,3.8rem);margin:14px 0 6px}
+#lock p.sub{font-size:1.05rem;opacity:.85;margin-bottom:26px;font-family:var(--serif);font-style:italic;font-size:1.3rem}
+.pw-wrap{width:min(320px,100%);display:flex;flex-direction:column;gap:14px}
+.pw-wrap input{
+  width:100%;padding:15px 20px;border-radius:999px;border:1.5px solid var(--blush);
+  background:rgba(255,255,255,.85);font:inherit;font-size:1.05rem;text-align:center;color:var(--ink);
+  outline:none;transition:box-shadow .25s,border-color .25s;letter-spacing:.08em;
+}
+.pw-wrap input:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(232,88,138,.18)}
+.pw-wrap.shake{animation:shake .45s}
+@keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.btn{
+  border:none;cursor:pointer;font:inherit;font-weight:500;font-size:1.05rem;color:#fff;
+  padding:15px 26px;border-radius:999px;
+  background:linear-gradient(135deg,var(--rose),var(--red));
+  box-shadow:0 10px 24px rgba(214,38,79,.3);transition:transform .2s,box-shadow .2s;
+  -webkit-tap-highlight-color:transparent;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(214,38,79,.36)}
+.btn:active{transform:scale(.97)}
+.btn.soft{background:rgba(255,255,255,.9);color:var(--deep);box-shadow:0 8px 20px rgba(232,88,138,.2);border:1.5px solid var(--blush)}
+.btn:focus-visible,input:focus-visible{outline:3px solid var(--rose);outline-offset:3px}
+#err{min-height:1.5em;color:var(--red);font-size:1rem;opacity:0;transition:opacity .3s}
+#err.show{opacity:1}
+
+/* ============ 2) شاشة عيد الميلاد ============ */
+#birthday h1{font-size:clamp(2.3rem,10vw,3.6rem);margin:6px 0 10px}
+#birthday p.line{font-family:var(--serif);font-style:italic;font-size:1.35rem;max-width:20em;margin-bottom:18px}
+
+/* الكيكة بالـ CSS */
+.cake{position:relative;width:170px;height:150px;margin:6px auto 22px}
+.cake .tier{position:absolute;left:50%;transform:translateX(-50%);border-radius:14px 14px 10px 10px}
+.cake .t1{bottom:0;width:170px;height:56px;background:linear-gradient(#ff9fbe,#e8588a)}
+.cake .t2{bottom:52px;width:124px;height:48px;background:linear-gradient(#ffd0df,#ff9fbe)}
+.cake .drip{position:absolute;left:50%;transform:translateX(-50%);bottom:94px;width:124px;height:14px;
+  background:radial-gradient(circle at 10px 0,#fffafb 9px,transparent 10px) 0 0/22px 14px repeat-x;}
+.cake .plate{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:200px;height:10px;border-radius:50%;background:#fff;box-shadow:0 6px 14px rgba(184,50,95,.2)}
+.candle{position:absolute;bottom:100px;width:8px;height:30px;border-radius:3px;background:repeating-linear-gradient(45deg,#fff 0 5px,var(--blush) 5px 10px)}
+.candle::before{content:"";position:absolute;top:-17px;left:50%;width:10px;height:16px;transform:translateX(-50%);
+  background:radial-gradient(ellipse at 50% 70%,#fff3a8,#ffb347 60%,transparent 70%);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+  animation:flame .5s ease-in-out infinite alternate;box-shadow:0 0 14px 4px rgba(255,190,80,.55)}
+@keyframes flame{from{transform:translateX(-50%) scale(1,1) rotate(-3deg)}to{transform:translateX(-50%) scale(.9,1.12) rotate(3deg)}}
+
+/* مشغل الأغنية */
+.player{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:18px}
+.eq{display:flex;gap:4px;height:22px;align-items:flex-end;opacity:0;transition:opacity .4s}
+.eq.on{opacity:1}
+.eq i{width:4px;background:var(--rose);border-radius:2px;height:6px;animation:eq 0.9s ease-in-out infinite alternate;animation-play-state:paused}
+.eq.on i{animation-play-state:running}
+.eq i:nth-child(2){animation-delay:.15s}.eq i:nth-child(3){animation-delay:.3s}
+.eq i:nth-child(4){animation-delay:.45s}.eq i:nth-child(5){animation-delay:.6s}
+@keyframes eq{to{height:22px}}
+#songMsg{font-size:.95rem;min-height:1.3em;opacity:.8}
+
+/* ============ 3) الظرف والرسالة ============ */
+#letter{justify-content:flex-start;padding-top:8vh}
+.env-title{font-family:var(--serif);font-style:italic;font-size:1.6rem;color:var(--deep);margin-bottom:22px}
+.envelope{
+  position:relative;width:min(300px,82vw);height:200px;cursor:pointer;border:none;background:none;
+  perspective:900px;-webkit-tap-highlight-color:transparent;transition:transform .6s ease,opacity .6s ease;
+}
+.envelope .back{position:absolute;inset:0;background:linear-gradient(#ffb3cb,#f58bb0);border-radius:12px;box-shadow:0 18px 36px rgba(184,50,95,.28)}
+.envelope .front{position:absolute;inset:0;border-radius:12px;overflow:hidden;
+  background:
+   linear-gradient(to top right,transparent 49.5%,#ff9fbe 50%) left/50% 100% no-repeat,
+   linear-gradient(to top left,transparent 49.5%,#ff8db3 50%) right/50% 100% no-repeat;}
+.envelope .flap{position:absolute;top:0;left:0;width:100%;height:105px;transform-origin:top;
+  background:linear-gradient(#ff8db3,#f9a1bf);clip-path:polygon(0 0,100% 0,50% 100%);
+  transition:transform .8s ease;z-index:3;backface-visibility:hidden}
+.envelope .seal{position:absolute;top:84px;left:50%;transform:translateX(-50%);font-size:34px;z-index:4;
+  filter:drop-shadow(0 4px 8px rgba(0,0,0,.25));transition:opacity .4s;animation:beat 1.8s infinite}
+.envelope.open .flap{transform:rotateX(180deg);z-index:0}
+.envelope.open .seal{opacity:0}
+.envelope.gone{opacity:0;transform:translateY(40px) scale(.95);pointer-events:none;position:absolute}
+.hint{margin-top:18px;font-size:.95rem;opacity:.7}
+
+.paper{
+  display:none;width:min(560px,100%);margin:0 auto 40px;padding:34px 26px 38px;
+  background:#fff;border-radius:6px;position:relative;text-align:right;direction:rtl;
+  background-image:linear-gradient(transparent 0,transparent 100%);
+  box-shadow:0 20px 50px rgba(184,50,95,.22),0 0 0 1px rgba(232,88,138,.12);
+  border-top:6px solid var(--rose);
+}
+.paper.show{display:block;animation:rise 1.1s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(80px) scale(.94)}to{opacity:1;transform:none}}
+.paper h2{font-family:var(--ar);font-style:normal;font-weight:700;font-size:1.7rem;margin-bottom:22px;text-align:center;direction:ltr}
+.letter-body{font-family:var(--ar);font-size:1.28rem;line-height:2.15;color:#4a2233}
+.letter-body p{margin-bottom:1.1em;white-space:pre-line} /* يحافظ على الأسطر كما كتبتها */
+.sign{margin-top:26px;text-align:center;direction:ltr;font-family:var(--serif);font-style:italic;font-weight:600;font-size:1.5rem;color:var(--red)}
+
+/* ============ كونفيتي ============ */
+.confetti{position:fixed;top:-12px;width:9px;height:14px;z-index:5;pointer-events:none;opacity:.9;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) translateX(var(--dx)) rotate(720deg);opacity:.9}}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<div id="hearts" aria-hidden="true"></div>
+
+<!-- ============ 1) شاشة كلمة السر ============ -->
+<section id="lock" class="screen active">
+  <div class="big-heart" aria-hidden="true">💌</div>
+  <h1>Hey Mera! ❤️</h1>
+  <p class="sub">I made something special just for you...</p>
+  <div class="pw-wrap" id="pwWrap">
+    <input id="pw" type="password" placeholder="The magic word" autocomplete="off" autocapitalize="off" aria-label="Password">
+    <button class="btn" id="unlockBtn">Unlock Your Surprise ♡</button>
+    <div id="err" role="alert">Oops! That's not the magic word 🤭</div>
+  </div>
+</section>
+
+<!-- ============ 2) شاشة عيد الميلاد ============ -->
+<section id="birthday" class="screen">
+  <h1>Happy Birthday, Mera! 🎂</h1>
+  <p class="line">To the most beautiful girl in my little world.</p>
+
+  <div class="cake" aria-hidden="true">
+    <span class="candle" style="left:52px"></span>
+    <span class="candle" style="left:81px"></span>
+    <span class="candle" style="left:110px"></span>
+    <div class="tier t2"></div><div class="drip"></div><div class="tier t1"></div><div class="plate"></div>
+  </div>
+
+  <div class="player">
+    <!-- ضع ملف الأغنية بجوار index.html بنفس الاسم: song.mp3 -->
+    <audio id="song" src="Albumaty.Com_kayrwky_bsrh_watwh.mp3" preload="none" loop></audio>
+    <button class="btn" id="playBtn">Play Our Song ♫</button>
+    <div class="eq" id="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    <div id="songMsg"></div>
+  </div>
+
+  <button class="btn soft" id="toLetter">A Little Letter For You 💌</button>
+</section>
+
+<!-- ============ 3) الرسالة ============ -->
+<section id="letter" class="screen">
+  <div class="env-title" id="envTitle">A Little Letter For You 💌</div>
+
+  <button class="envelope" id="envelope" aria-label="Open the letter">
+    <div class="back"></div>
+    <div class="front"></div>
+    <div class="flap"></div>
+    <div class="seal">❤️</div>
+  </button>
+  <div class="hint" id="hint">Tap the envelope</div>
+
+  <article class="paper" id="paper">
+    <h2>To My Favorite Girl, Mera ❤️</h2>
+
+    <div class="letter-body" id="letterBody" lang="ar" dir="rtl">
+      <!-- نص الرسالة كما كتبته بدون أي تعديل -->
+      <p>أولاً محبتش أكرر نفس اللي عملته السنة اللي فاتت وأكتبلك من قبلها بيوم حبيت أعملك حاجة مختلفة شوية علشان روح قلبي تستاهل كل حاجة حلوة وتستاهل إني أفكر أفرحها وأعملها حاجة تبسطها حتى لو بسيطة</p>
+      <p>ثانيا بقى يا ست البنات وحشتيني جدا والله رغم إنك بعيدة عني شوية بس ده عمره ما غير أي حاجة من اللي جوايا ناحيتك بالعكس إنتي دايما في بالي وبفكر فيكي وبتوحشيني في أوقات كتير حتى لو مش بقولك ودايما ببقى عاوز أشوفك وأقعد معاكي وأتكلم معاكي وأحضنك وأطمن عليكي</p>
+      <p>وعايز أقولك متزعليش مني لو في يوم زعقتلك أو اتعصبت عليكي أو كنت مش أحسن حاجة معاكي حقك عليا يا عيوني أنا عارف إني ساعات ببقى رخم وبعصبك ويمكن مش بعرف أتصرف صح في كل المواقف بس والله عمري ما بكون عاوز أزعلك ولا أخليكي تزعلي مني وإنتي عارفة معزتك عندي قد إيه</p>
+      <p>وفترة الفرح يمكن مكنتش معاكي بالشكل اللي كنت أتمنى أكون بيه بس صدقيني كنتي دايما في بالي وكنت بفكر فيكي كتير ودايما كان نفسي أبقى جنبك وأشوفك وأحضنك وأشاركك كل حاجة بتحصل معاكي حتى لو مش بكلمك بس بتكوني في بالي بجد </p>
+      <p>وطبعا ست البنات بقى دايما بتعصبني وبتطلع عيني بس عادي يعني الواحد بيستحمل حبيبته ويعمل نفسه مش واخد باله 😂😂 بس بجد بحب تفاصيلك حتى الحاجات اللي بتعصبني منك وبحب طريقتك وشخصيتك وكل حاجة فيكي مش اوي يعني😂🫣</p>
+      <p>وعايزك تعرفي إني دايما بشوفك أجمل ميرا وفخور بيكي جدا وبكل حاجة بتعمليها حتى لو إنتي شايفاها حاجة بسيطة أنا شايف تعبك ومجهودك ومحاولاتك وشايف قد إيه بتتعبي وبتحاولي في الكلية وفي السكن وفي كل حاجة بتعمليها وصدقيني أنا مقدر ده جدا ويمكن مش بقولك كل مرة بس أنا فعلا فخور بيكي وباجتهادك وبإنك بتحاولي تكملي وتعملي اللي عليكي حتى في 
+الأيام اللي بتكون صعبة عليكي عاوزك ترضيييي بس اهم حاجة 😂😂😂</p>
+      <p>ومتنسيش أبدا إن ربنا مش بيضيع تعب حد وإن كل مجهود بتعمليه أكيد هييجي يوم وتشوفي نتيجته وإنتي تستاهلي كل خير وكل حاجة نفسك فيها وأنا دايما هفضل أشجعك وأفرحلك وأكون مبسوط بنجاحك حتى لو كان في أبسط حاجة حتي وانتي معصباني يا بنت شيمو😂</p>
+      <p>وأخيرا بقى كل سنة وإنتي طيبة يا أحلى أميرة في الدنيا وكل سنة وإنتي طيبة يا ست البنات ربنا يخليكي ليا ويفرح قلبك ويحققلك كل اللي نفسك فيه ويبعد عنك أي حاجة تضايقك وتفضلي دايما مبسوطة وناجحة وضحكتك على وشك و مرتاحه برضو 😂😉</p>
+      <p>يارب السنة الجديدة من عمرك تكون أحلى من كل اللي فات وتحققي فيها حاجات كتير نفسك فيها وأنا أكون معاكي في كل لحظة حلوة ونفضل نكبر  ونعيش أيام كتير حلوة يا جزمه
+و ادلعك😉😂
+بحبك أووووي يا ميرا ومهما أقولك مش هعرف أوصفلك إنتي غالية عندي قد إيه كل سنة وإنتي طيبه يا ست البنات 🫂❤️</p>
+    </div>
+
+    <div class="sign">Forever Your Biggest Fan ❤️</div>
+  </article>
+</section>
+
+<script>
+/* ============ إعدادات ============ */
+const PASSWORD = 'mera911';           // كلمة السر
+const $ = id => document.getElementById(id);
+
+/* ============ القلوب المتحركة في الخلفية ============ */
+const heartsBox = $('hearts');
+const heartChars = ['❤','♡','💗','💖','✦'];
+function spawnHeart(){
+  const h = document.createElement('span');
+  h.className = 'heart';
+  h.textContent = heartChars[Math.floor(Math.random()*heartChars.length)];
+  h.style.left = Math.random()*100 + 'vw';
+  h.style.fontSize = (12 + Math.random()*20) + 'px';
+  h.style.color = Math.random() > .5 ? '#f27aa3' : '#ff9fbe';
+  h.style.setProperty('--dx', (Math.random()*80-40) + 'px');
+  h.style.setProperty('--rot', (Math.random()*60-30) + 'deg');
+  const dur = 7 + Math.random()*6;
+  h.style.animationDuration = dur + 's';
+  heartsBox.appendChild(h);
+  setTimeout(() => h.remove(), dur*1000);
+}
+setInterval(spawnHeart, 900);
+for(let i=0;i<5;i++) setTimeout(spawnHeart, i*250);
+
+/* ============ الانتقال بين الشاشات ============ */
+function go(fromId, toId){
+  const from = $(fromId), to = $(toId);
+  from.classList.add('leaving');
+  setTimeout(() => {
+    from.classList.remove('active','leaving');
+    to.classList.add('active');
+    window.scrollTo(0,0);
+  }, 550);
+}
+
+/* ============ 1) كلمة السر ============ */
+function tryUnlock(){
+  const val = $('pw').value.trim().toLowerCase();
+  if(val === PASSWORD){
+    $('err').classList.remove('show');
+    go('lock','birthday');
+    setTimeout(() => { burstConfetti(70); for(let i=0;i<8;i++) setTimeout(spawnHeart,i*120); }, 700);
+  } else {
+    $('err').classList.add('show');
+    const w = $('pwWrap');
+    w.classList.remove('shake'); void w.offsetWidth; w.classList.add('shake');
+  }
+}
+$('unlockBtn').addEventListener('click', tryUnlock);
+$('pw').addEventListener('keydown', e => { if(e.key === 'Enter') tryUnlock(); });
+$('pw').addEventListener('input', () => $('err').classList.remove('show'));
+
+/* ============ كونفيتي خفيف ============ */
+function burstConfetti(n){
+  const colors = ['#e8588a','#ffc9d9','#d6264f','#fff','#ff9fbe','#ffd36e'];
+  for(let i=0;i<n;i++){
+    const c = document.createElement('i');
+    c.className = 'confetti';
+    c.style.left = Math.random()*100 + 'vw';
+    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    c.style.borderRadius = Math.random() > .5 ? '50%' : '2px';
+    c.style.setProperty('--dx', (Math.random()*120-60) + 'px');
+    const dur = 2.6 + Math.random()*2.4;
+    c.style.animationDuration = dur + 's';
+    c.style.animationDelay = (Math.random()*.8) + 's';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), (dur+1)*1000);
+  }
+}
+
+/* ============ 2) تشغيل الأغنية ============ */
+const song = $('song'), playBtn = $('playBtn'), eq = $('eq'), songMsg = $('songMsg');
+function setPlaying(on){
+  eq.classList.toggle('on', on);
+  playBtn.textContent = on ? 'Pause Our Song ❚❚' : 'Play Our Song ♫';
+  songMsg.textContent = on ? '😘 يا أغلى من عيني 🎶' : '';
+}
+playBtn.addEventListener('click', () => {
+  if(song.paused){
+    song.play().then(() => setPlaying(true)).catch(() => {
+      setPlaying(false);
+      songMsg.textContent = 'لم أجد song.mp3 — ضعه بجوار index.html 🎵';
+    });
+  } else { song.pause(); setPlaying(false); }
+});
+song.addEventListener('error', () => { setPlaying(false); songMsg.textContent = 'لم أجد song.mp3 — ضعه بجوار index.html 🎵'; });
+
+$('toLetter').addEventListener('click', () => go('birthday','letter'));
+
+/* ============ 3) الظرف ============ */
+const envelope = $('envelope');
+envelope.addEventListener('click', () => {
+  if(envelope.classList.contains('open')) return;
+  envelope.classList.add('open');            // يفتح الغطاء
+  $('hint').style.display = 'none';
+  setTimeout(() => {
+    envelope.classList.add('gone');          // يختفي الظرف بنعومة
+    $('envTitle').style.display = 'none';
+    $('paper').classList.add('show');        // تظهر الورقة
+    burstConfetti(30);
+  }, 950);
+  setTimeout(() => { envelope.style.display = 'none'; }, 1700);
+});
+</script>
+</body>
+</html>
